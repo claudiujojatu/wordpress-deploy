@@ -15,7 +15,8 @@ services:
         }
     volumes:
       - wp_data:/var/www/html
-    networks: [app_net]
+    networks:
+      - dokploy-shared
 
   nginx:
     image: nginx:1.27-alpine
@@ -27,10 +28,13 @@ services:
     expose:
       - "80"
     restart: unless-stopped
-    networks: [app_net]
+    networks:
+      - dokploy-shared
 
 volumes:
   wp_data:
 
 networks:
-  app_net:
+  dokploy-shared:
+    external: true
+    name: dokploy-network # <-- the overlay network you listed
