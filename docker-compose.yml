@@ -22,6 +22,12 @@ services:
     image: nginx:1.27-alpine
     depends_on:
       - wordpress
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mkwebsite.rule=Host(`milkandcookies.studio`,`www.milkandcookies.studio`)"
+      - "traefik.http.routers.mkwebsite.entrypoints=websecure"
+      - "traefik.http.routers.mkwebsite.tls.certresolver=letsencrypt"
+      - "traefik.http.services.mkwebsite.loadbalancer.server.port=80"
     volumes:
       - wp_data:/var/www/html:ro
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
