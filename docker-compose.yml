@@ -31,13 +31,13 @@ services:
 
       # HTTPS router
       - "traefik.http.routers.mkwebsite.entrypoints=websecure"
-      - "traefik.http.routers.mkwebsite.rule=Host(`milkandcookies.studio`,`www.milkandcookies.studio`)"
+      - "traefik.http.routers.mkwebsite.rule=Host(`milkandcookies.studio`) || Host(`www.milkandcookies.studio`)"
       - "traefik.http.routers.mkwebsite.tls=true"
       - "traefik.http.routers.mkwebsite.tls.certresolver=letsencrypt"
 
       # HTTP -> HTTPS redirect
       - "traefik.http.routers.mkwebsite-http.entrypoints=web"
-      - "traefik.http.routers.mkwebsite-http.rule=Host(`milkandcookies.studio`,`www.milkandcookies.studio`)"
+      - "traefik.http.routers.mkwebsite-http.rule=Host(`milkandcookies.studio`) || Host(`www.milkandcookies.studio`)"
       - "traefik.http.routers.mkwebsite-http.middlewares=redirect-to-https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
     volumes:
